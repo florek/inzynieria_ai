@@ -1,4 +1,4 @@
-# Inżynieria AI — notatki (strony 1–54)
+# Inżynieria AI — notatki (strony 1–59)
 
 ## Kontekst i cel materiału
 
@@ -162,4 +162,39 @@ Analiza setek repozytoriów z otwartym kodem na GitHubie pokazuje **rozkład prz
 
 **Konserwacja i zmienność środowiska:** utrzymanie produktu AI wiąże się z **szybką ewolucją** dziedziny. Zmiany bywają korzystne (maleją ograniczenia modeli, **dłuższe okna kontekstu**, wyższa jakość odpowiedzi, **tańsze i szybsze wnioskowanie**), ale też **zakłócają procesy** — wymagają ciągłej **analizy kosztów i korzyści** inwestycji; to, co dziś optymalne, jutro może przestać się opłacać (np. zmiana cen u dostawców, upadłość dostawcy). **Ujednolicone API** ułatwiają migrację między modelami, lecz **każdy model ma swoje cechy** — bez **wersjonowania** i **ewaluacji** adaptacja bywa uciążliwa. **Regulacje** (w tym traktowanie AI jako kwestii bezpieczeństwa, kontrola zasobów obliczeniowych, handel) mogą zmieniać dostępność infrastruktury **z dnia na dzień**; pojawiają się też ryzyka **własności intelektualnej** przy modelach trenowanych na cudzych danych — część branż **ogranicza użycie AI** ze względu na niepewność prawną.
 
-**Stos technologiczny — wejście:** rosnący szum i **FOMO** sprzyjają gonitwie za narzędziami; zamiast tego materiał kładzie nacisk na **fundamenty** inżynierii AI. Dyscyplina **wywodzi się z inżynierii ML**; organizacje albo **łączą role** AI i ML, albo je **rozdzielają** — obowiązki bywają silnie pokrywające się, a inżynier ML może rozszerzać kompetencje o AI. Dalsza część opracowania rozwija **trzy warstwy stosu** (projektowanie aplikacji, projektowanie modelu, infrastruktura) oraz porównania z tradycyjną inżynierią ML i pełnym stackiem aplikacji.
+**Stos technologiczny — wejście:** rosnący szum i **FOMO** sprzyjają gonitwie za narzędziami; zamiast tego materiał kładzie nacisk na **fundamenty** inżynierii AI. Dyscyplina **wywodzi się z inżynierii ML**; organizacje albo **łączą role** AI i ML, albo je **rozdzielają** — obowiązki bywają silnie pokrywające się, a inżynier ML może rozszerzać kompetencje o AI.
+
+## Strony 55–59: trzy warstwy stosu AI i różnice względem klasycznego ML
+
+**Trzy warstwy stosu AI:** aplikacje AI są opisywane jako układ trzech warstw: **projektowanie aplikacji**, **projektowanie modelu** i **infrastruktura**. Praktyka często zaczyna się od warstwy aplikacyjnej (najszybszy cykl iteracji), a zejście niżej następuje wtedy, gdy ograniczenia jakości, kosztu lub opóźnień tego wymagają.
+
+**Warstwa projektowania aplikacji:** obejmuje dobór instrukcji i kontekstu, projekt interfejsu oraz silną **ewaluację** jakości odpowiedzi. To zwykle pierwsza warstwa, z którą stykają się zespoły wdrażające modele podstawowe, bo właśnie tu najłatwiej uruchomić eksperyment i uzyskać wartość biznesową.
+
+**Warstwa projektowania modelu:** obejmuje modelowanie i trenowanie, inżynierię danych oraz optymalizację wnioskowania. W kontekście modeli podstawowych rośnie znaczenie adaptacji gotowego modelu oraz jakości danych, a jednocześnie nie znika potrzeba rygoru ewaluacyjnego.
+
+**Warstwa infrastruktury:** odpowiada za serwowanie modeli, zarządzanie danymi i zasobami obliczeniowymi oraz monitorowanie systemu. Rozwija się wolniej niż warstwy aplikacji i modelu, ale pozostaje krytyczna dla skalowania, niezawodności i kontroli kosztów.
+
+**Co pozostaje stałe mimo nowej fali AI:** niezależnie od dynamiki narzędzi, nadal obowiązują zasady znane z inżynierii ML: mapowanie celów biznesowych na metryki techniczne, eksperymentowanie, optymalizacja kosztu i wydajności oraz pętla informacji zwrotnej z produkcji.
+
+**Trzy kluczowe różnice między inżynierią AI i tradycyjną inżynierią ML:**
+1. Akcent przesuwa się z budowy modelu od zera na **adaptację istniejących modeli podstawowych**.
+2. Większe modele oznaczają wyższe wymagania obliczeniowe, większe opóźnienia i silniejszy nacisk na **optymalizację treningu oraz inferencji**.
+3. Otwarty charakter generowanych wyników zwiększa uniwersalność, ale utrudnia **ewaluację**, która staje się centralnym problemem inżynierskim.
+
+**Adaptacja bez i ze zmianą wag:** inżynieria promptów adaptuje model bez modyfikacji wag, zwykle szybciej i mniejszym kosztem danych; dostrajanie zmienia wagi, by osiągnąć wyższą jakość lub spełnić wymagania, których sam prompt nie realizuje. Dobór techniki zależy od wymagań jakości, kosztu i czasu odpowiedzi.
+
+**Projektowanie modelu — zakres kompetencji:** dostępność modeli podstawowych obniża próg wejścia, ale wiedza ML nadal daje przewagę diagnostyczną i projektową. Gdy system nie działa zgodnie z oczekiwaniami, rozumienie uczenia, funkcji straty czy architektur sieci pomaga szybciej znaleźć źródło problemu.
+
+**Terminologia treningu:** trenowanie zawsze oznacza zmianę wag, ale nie każda zmiana wag jest treningiem (np. kwantyzacja). W praktyce rozróżnia się:
+- **wstępne trenowanie** — od losowej inicjalizacji, najbardziej zasobożerne,
+- **dostrajanie** — kontynuacja treningu modelu już wytrenowanego,
+- **post-trening** — zwykle ten sam typ operacji co dostrajanie, lecz wykonywany na etapie rozwoju modelu przez jego dostawcę.
+
+**Inżynieria danych w erze modeli podstawowych:** rośnie ciężar pracy na danych nieustrukturyzowanych i zadaniach otwartych; trudniejsze staje się etykietowanie i kontrola jakości. W praktyce rośnie znaczenie deduplikacji, tokenizacji, wyszukiwania kontekstu i filtracji treści wrażliwych.
+
+**Optymalizacja inferencji jako przewaga operacyjna:** autoregresyjne generowanie token po tokenie bezpośrednio przekłada się na opóźnienie i koszt, dlatego skracanie czasu odpowiedzi oraz obniżanie kosztu zapytania to jeden z najważniejszych kierunków inżynieryjnych.
+
+**Pytania kontrolne do dalszej pracy architektonicznej:**
+- Jakie metryki biznesowe i jakościowe połączysz z ewaluacją na warstwie aplikacyjnej?
+- Kiedy w Twoim przypadku sama inżynieria promptów przestaje wystarczać i uzasadnione staje się dostrajanie?
+- Który element infrastruktury najbardziej ogranicza dziś skalowanie: serwowanie, dane czy monitorowanie?
