@@ -1,4 +1,4 @@
-# Inżynieria AI — notatki (strony 1–59)
+# Inżynieria AI — notatki (strony 1–64)
 
 ## Kontekst i cel materiału
 
@@ -193,6 +193,28 @@ Analiza setek repozytoriów z otwartym kodem na GitHubie pokazuje **rozkład prz
 **Inżynieria danych w erze modeli podstawowych:** rośnie ciężar pracy na danych nieustrukturyzowanych i zadaniach otwartych; trudniejsze staje się etykietowanie i kontrola jakości. W praktyce rośnie znaczenie deduplikacji, tokenizacji, wyszukiwania kontekstu i filtracji treści wrażliwych.
 
 **Optymalizacja inferencji jako przewaga operacyjna:** autoregresyjne generowanie token po tokenie bezpośrednio przekłada się na opóźnienie i koszt, dlatego skracanie czasu odpowiedzi oraz obniżanie kosztu zapytania to jeden z najważniejszych kierunków inżynieryjnych.
+
+## Strony 60–64: doprecyzowanie stosu, ewaluacji i interfejsów AI
+
+**Dostrajanie a post-trening:** oba pojęcia opisują ten sam rodzaj operacji technicznej (kontynuacja treningu i zmiana wag modelu), ale bywają rozróżniane kontekstowo: post-trening częściej odnosi się do działań dostawcy modelu przed publikacją, a dostrajanie do adaptacji wykonywanej przez zespół aplikacyjny.
+
+**Prompting to nie trening:** jeśli poprawiasz wyniki przez lepsze instrukcje i kontekst, nie zmieniasz wag modelu, więc jest to inżynieria promptów, a nie trening w sensie technicznym.
+
+**Dane jako główna dźwignia jakości:** przy modelach podstawowych ciężar pracy przesuwa się z klasycznej inżynierii cech na deduplikację, tokenizację, budowę kontekstu i filtrację danych wrażliwych/toksycznych. W zadaniach otwartych etykietowanie jest trudniejsze niż w zamkniętych klasyfikacjach.
+
+**Hierarchia zapotrzebowania na dane:** najwięcej danych zwykle wymaga trening od zera, mniej dostrajanie, a najmniej inżynieria promptów. Nawet gdy danych potrzeba relatywnie niewiele, ich jakość i charakter pozostają kluczowe dla diagnozy mocnych i słabych stron systemu.
+
+**Ewaluacja jako mechanizm redukcji ryzyka:** w aplikacjach opartych na modelach podstawowych ewaluacja jest jeszcze ważniejsza niż w klasycznym ML, bo wyniki mają charakter otwarty i trudniej je porównywać do jednej „prawdy bazowej”. Dodatkowo dobór metody adaptacji (np. wariantu promptingu) może silnie zmieniać wynik końcowy.
+
+**Wpływ metody promptowania na benchmarki:** wyniki porównań modeli zależą od konfiguracji ewaluacji (np. liczby przykładów few-shot), dlatego interpretacja rankingów wymaga ostrożności i porównywania na możliwie równych ustawieniach.
+
+**Warstwa aplikacyjna jako przewaga konkurencyjna:** gdy wiele zespołów korzysta z podobnych modeli bazowych, różnicę tworzą jakość ewaluacji, projekt promptów oraz sposób dostarczenia produktu użytkownikowi.
+
+**Interfejs AI jako część architektury:** aplikacje AI mogą działać jako produkty samodzielne, wtyczki, rozszerzenia przeglądarki, boty w komunikatorach, integracje API oraz interfejsy głosowe/awatarowe. Wybór interfejsu wpływa na adopcję, opóźnienia i jakość pętli feedbacku.
+
+**Feedback z interfejsu konwersacyjnego:** naturalny język ułatwia użytkownikom przekazywanie opinii, ale utrudnia automatyczne przetwarzanie sygnału zwrotnego, więc projekt zbierania feedbacku staje się elementem systemowym, a nie dodatkiem.
+
+**Inżynieria AI bliżej pełnego software engineeringu:** rosnąca rola warstwy produktowej i interfejsów zwiększa znaczenie kompetencji full-stack/front-end oraz szybkiego prototypowania, iteracji i wdrażania zmian na podstawie zachowań użytkowników.
 
 **Pytania kontrolne do dalszej pracy architektonicznej:**
 - Jakie metryki biznesowe i jakościowe połączysz z ewaluacją na warstwie aplikacyjnej?

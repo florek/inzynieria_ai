@@ -2,6 +2,7 @@
 
 | Data | Wynik | % | Braki | Link |
 |------|-------|---|-------|------|
+| 27.04.2026 | 17/20 | 85% | 13, 19 | [27.04.2026_results.md](27.04.2026_results.md) |
 | 25.04.2026 | 19/20 | 95% | 5 | [25.04.2026_results.md](25.04.2026_results.md) |
 | 24.04.2026 | 20/20 | 100% | brak | [24.04.2026_results.md](24.04.2026_results.md) |
 | 21.04.2026 | 18/20 | 90% | 6 | [21.04.2026_results.md](21.04.2026_results.md) |
@@ -11,20 +12,21 @@
 ## Statystyki
 
 - Najlepszy wynik: 20/20 (100%) — 19.04.2026, 24.04.2026
-- Najgorszy wynik: 18/20 (90%) — 21.04.2026
-- Średnia ze wszystkich prób: 19,20/20 (96,00%)
-- Ostatnie 5 wyników (wszystkie zapisane próby, malejąco po dacie): 25.04.2026 — 19/20 (95%); 24.04.2026 — 20/20 (100%); 21.04.2026 — 18/20 (90%); 20.04.2026 — 19/20 (95%); 19.04.2026 — 20/20 (100%)
+- Najgorszy wynik: 17/20 (85%) — 27.04.2026
+- Średnia ze wszystkich prób: 18,83/20 (94,17%)
+- Ostatnie 5 wyników (wszystkie zapisane próby, malejąco po dacie): 27.04.2026 — 17/20 (85%); 25.04.2026 — 19/20 (95%); 24.04.2026 — 20/20 (100%); 21.04.2026 — 18/20 (90%); 20.04.2026 — 19/20 (95%)
 
 ## Najczęstsze obszary do poprawy
 
-Na podstawie błędów zapisanych we wszystkich plikach `*_results.md` (łącznie **4** pomyłki w pięciu quizach):
+Na podstawie błędów zapisanych we wszystkich plikach `*_results.md` (łącznie **7** pomyłek w sześciu quizach):
 
 | Kategoria | Liczba błędów |
 |-----------|----------------|
-| [Modele podstawowe] | 1 |
-| [Badania] | 1 |
+| [Inżynieria AI] | 2 |
 | [Agregacja] | 1 |
-| [Inżynieria AI] | 1 |
+| [Badania] | 1 |
+| [Feedback] | 1 |
+| [Multimodalność] | 1 |
 
 Pozostałe kategorie z notatek: brak dodatkowych błędów w zapisanych wynikach.
 
