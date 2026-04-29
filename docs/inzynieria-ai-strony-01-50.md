@@ -1,4 +1,4 @@
-# Inżynieria AI — notatki (strony 1–64)
+# Inżynieria AI — notatki (strony 1–67)
 
 ## Kontekst i cel materiału
 
@@ -215,6 +215,18 @@ Analiza setek repozytoriów z otwartym kodem na GitHubie pokazuje **rozkład prz
 **Feedback z interfejsu konwersacyjnego:** naturalny język ułatwia użytkownikom przekazywanie opinii, ale utrudnia automatyczne przetwarzanie sygnału zwrotnego, więc projekt zbierania feedbacku staje się elementem systemowym, a nie dodatkiem.
 
 **Inżynieria AI bliżej pełnego software engineeringu:** rosnąca rola warstwy produktowej i interfejsów zwiększa znaczenie kompetencji full-stack/front-end oraz szybkiego prototypowania, iteracji i wdrażania zmian na podstawie zachowań użytkowników.
+
+## Strony 65–67: podsumowanie rozdziału wprowadzającego i wejście w rozdział o modelach podstawowych
+
+**Odwrócona kolejność względem klasycznego ML:** w tradycyjnym podejściu zwykle najpierw zbiera się dane i trenuje model, a budowa produktu schodzi na koniec. Przy szerokiej dostępności gotowych modeli podstawowych sensowna bywa odwrotna kolejność: zacząć od produktu, a dopiero gdy aplikacja okaże się obiecująca, inwestować głębiej w dane i modele. W organizacjach często rozłączano projektowanie modelu od produktu; przy modelach podstawowych inżynierowie AI bywają znacznie mocniej zaangażowani w tworzenie produktu.
+
+**Cele rozdziału wprowadzającego:** wyjaśnienie genezy inżynierii AI dzięki modelom podstawowym oraz zarys ogólnego procesu budowy aplikacji na nich. Wiele tematów zostało tylko zasygnalizowanych i wraca w dalszych partiach opracowania. Przed startem prac nad aplikacją wraca pytanie, czy w ogóle warto ją budować, z uwzględnieniem czynników ryzyka i szansy.
+
+**Relacja do inżynierii ML:** termin „inżynieria AI” jest nowy, lecz wywodzi się z szeroko rozumianej inżynierii ML — budowy aplikacji na różnych modelach uczenia maszynowego. Wiele zasad ML pozostaje ważnych; pojawiają się też nowe wyzwania i narzędzia. Szybki postęp społeczności bywa przytłaczający; agregacja informacji przez AI ułatwia śledzenie nowinek, ale w skomplikowanych obszarach nadal potrzebna jest metodyka — dalsze rozdziały ją systematyzują, zaczynając od samego obiektu pracy, czyli modeli podstawowych.
+
+**Rozdział o modelach podstawowych — założenia dla czytelnika:** do korzystania z modelu nie trzeba umieć projektować go od zera ani budować własnego odpowiednika czołowych chatów; wystarczy ogólne zrozumienie, by wybierać model i dopasowywać go do potrzeb. Trening modelu podstawowego jest kosztowny i złożony, a pełna transparentność procesu bywa ograniczona. Różnice między modelami wynikają m.in. z danych treningowych, architektury, rozmiaru oraz sposobu dostrajania pod preferencje użytkowników. Rozdział zaczyna się od rozkładu i doboru danych treningowych; szczegółowa inżynieria zbiorów danych pojawia się później jako osobny blok tematyczny.
+
+**Dwuetapowy schemat treningu:** typowo wyróżnia się trenowanie wstępne, które czyni model zdolnym do działania, choć niekoniecznie bezpiecznym ani wygodnym w użyciu, oraz post-trening ukierunkowany na zgodność z ludzkimi preferencjami. Dalsza część rozdziału tłumaczy, jak implementuje się takie dopasowanie w sposób zrozumiały dla modelu. Osobno podkreśla się rolę **próbkowania** — mechanizmu wyboru odpowiedzi spośród możliwości — jako często niedocenianego czynnika wpływającego m.in. na halucynacje i spójność odpowiedzi.
 
 **Pytania kontrolne do dalszej pracy architektonicznej:**
 - Jakie metryki biznesowe i jakościowe połączysz z ewaluacją na warstwie aplikacyjnej?
