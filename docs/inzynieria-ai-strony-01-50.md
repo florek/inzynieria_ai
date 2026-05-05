@@ -1,4 +1,4 @@
-# Inżynieria AI — notatki (strony 1–67)
+# Inżynieria AI — notatki (strony 1–70)
 
 ## Kontekst i cel materiału
 
@@ -232,3 +232,23 @@ Analiza setek repozytoriów z otwartym kodem na GitHubie pokazuje **rozkład prz
 - Jakie metryki biznesowe i jakościowe połączysz z ewaluacją na warstwie aplikacyjnej?
 - Kiedy w Twoim przypadku sama inżynieria promptów przestaje wystarczać i uzasadnione staje się dostrajanie?
 - Który element infrastruktury najbardziej ogranicza dziś skalowanie: serwowanie, dane czy monitorowanie?
+
+## Strony 68–70: dane treningowe i nierównowaga językowa
+
+**Dane decydują o możliwościach modelu:** model jest ograniczony przez rozkład danych treningowych. Jeśli dany język lub typ zadania występuje marginalnie w danych, model zwykle nie będzie w tym obszarze niezawodny. To dotyczy zarówno tłumaczeń, jak i zadań specjalistycznych.
+
+**Dostępność danych kontra ich dopasowanie:** zespoły często korzystają z danych, które są łatwo dostępne, nawet gdy są słabo dopasowane do celu aplikacji. To zwiększa ryzyko, że model dobrze odpowiada na zadania reprezentowane w zbiorze, ale słabo działa tam, gdzie biznes realnie potrzebuje jakości.
+
+**Common Crawl jako standard i źródło ryzyka:** duże modele często korzystają z wariantów Common Crawl, bo skala danych jest ogromna. Jednocześnie ten korpus zawiera również treści niskiej jakości, dezinformację i materiały o ograniczonej wiarygodności, więc sam wolumen danych nie rozwiązuje problemu jakości.
+
+**Heurystyki filtrujące nie zastępują strategii danych:** filtrowanie po sygnałach popularności może ograniczać najsłabsze treści, ale nie gwarantuje merytorycznej jakości ani zgodności z celem modelu. Selekcja danych powinna wynikać z oczekiwanych zadań i języków, a nie tylko z wygody pozyskania danych.
+
+**Ilość danych nie wygrywa automatycznie z jakością:** mniejszy, lepiej dobrany zbiór danych wysokiej jakości może pozwolić mniejszemu modelowi osiągać lepsze wyniki niż większy model uczony na słabszych danych. To praktyczna wskazówka przy planowaniu budżetu danych i obliczeń.
+
+**Nierównowaga językowa w danych internetowych:** silna dominacja angielskiego w publicznych korpusach powoduje, że modele ogólnego przeznaczenia zwykle osiągają najlepsze wyniki właśnie w tym języku, a gorzej radzą sobie w językach niedoreprezentowanych.
+
+**Niedoreprezentowanie języków ma konsekwencje produktowe:** gorsza jakość odpowiedzi to tylko część problemu. W językach o mniej efektywnej tokenizacji ta sama treść może kosztować więcej tokenów, co przekłada się na wyższy koszt i większe opóźnienie inferencji.
+
+**Tłumaczenie do angielskiego nie jest uniwersalnym obejściem:** strategia tłumaczenia zapytań na angielski i z powrotem bywa pomocna, ale może gubić istotne niuanse semantyczne i kulturowe. Dodatkowo wymaga, by model już dobrze rozumiał język źródłowy.
+
+**Wniosek architektoniczny dla aplikacji wielojęzycznych:** dobór modelu i plan danych powinny uwzględniać konkretne języki docelowe, ich pokrycie w danych treningowych oraz koszt tokenizacji. W praktyce często potrzebne są modele adaptowane językowo lub modele trenowane pod wybrane języki.
