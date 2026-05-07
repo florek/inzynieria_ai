@@ -2,6 +2,7 @@
 
 | Data | Wynik | % | Braki | Link |
 |------|-------|---|-------|------|
+| 07.05.2026 | 20/20 | 100% | brak | [07.05.2026_results.md](07.05.2026_results.md) |
 | 05.05.2026 | 20/20 | 100% | brak | [05.05.2026_results.md](05.05.2026_results.md) |
 | 29.04.2026 | 18/20 | 90% | 15 | [29.04.2026_results.md](29.04.2026_results.md) |
 | 27.04.2026 | 17/20 | 85% | 13, 19 | [27.04.2026_results.md](27.04.2026_results.md) |
@@ -13,14 +14,14 @@
 
 ## Statystyki
 
-- Najlepszy wynik: 20/20 (100%) — 05.05.2026, 24.04.2026, 19.04.2026
+- Najlepszy wynik: 20/20 (100%) — 07.05.2026, 05.05.2026, 24.04.2026, 19.04.2026
 - Najgorszy wynik: 17/20 (85%) — 27.04.2026
-- Średnia ze wszystkich prób: 18,875/20 (93,75%)
-- Ostatnie 5 wyników (malejąco po dacie): 05.05.2026 — 20/20 (100%); 29.04.2026 — 18/20 (90%); 27.04.2026 — 17/20 (85%); 25.04.2026 — 19/20 (95%); 24.04.2026 — 20/20 (100%)
+- Średnia ze wszystkich prób: 19,00/20 (95,00%)
+- Ostatnie 5 wyników (malejąco po dacie): 07.05.2026 — 20/20 (100%); 05.05.2026 — 20/20 (100%); 29.04.2026 — 18/20 (90%); 27.04.2026 — 17/20 (85%); 25.04.2026 — 19/20 (95%)
 
 ## Najczęstsze obszary do poprawy
 
-Na podstawie błędów zapisanych we wszystkich plikach `*_results.md` (łącznie **9** pomyłek w ośmiu quizach zapisanych przed pełnym sukcesem z 05.05.2026; sam quiz 05.05.2026 nie wnosi nowych błędów):
+Na podstawie błędów zapisanych we wszystkich plikach `*_results.md` (łącznie **9** pomyłek w dziewięciu quizach; quizy 05.05.2026 i 07.05.2026 nie wnoszą nowych błędów):
 
 | Kategoria | Liczba błędów |
 |-----------|----------------|
@@ -43,3 +44,5 @@ Quiz 24.04.2026 (strony 1–54): wynik bez błędów; warto kontynuować materia
 Quiz 29.04.2026 (notatki do str. 67): dwa błędy — brak odpowiedzi przy **pass@k** oraz pomyłka przy rozróżnieniu uzupełniania od konwersacji; przy sprawdzaniu skorygowano literówki w kluczu odpowiedzi dla pytań 11 i 19 tak, by zgadzały się z uzasadnieniami w pliku odpowiedzi (inżynieria promptów bez zmiany wag; start praktyki od warstwy aplikacji).
 
 Quiz 05.05.2026 (notatki do str. 70): wynik 20/20; przed sprawdzeniem skorygowano pytanie 12 w kluczu (`docs/quiz/answers/05.05.2026_answers.md`) — „rosnące zapotrzebowanie na dane” to kolejność od najmniej do najbardziej kosztownej danymi ścieżki (prompting → dostrajanie → trening od zera), a nie odwrotna.
+
+Quiz 07.05.2026 (notatki do str. 73): wynik 20/20; pełna zgodność odpowiedzi z kluczem i brak nowych kategorii błędów.
