@@ -2,6 +2,7 @@
 
 | Data | Wynik | % | Braki | Link |
 |------|-------|---|-------|------|
+| 08.05.2026 | 20/20 | 100% | brak | [08.05.2026_results.md](08.05.2026_results.md) |
 | 07.05.2026 | 20/20 | 100% | brak | [07.05.2026_results.md](07.05.2026_results.md) |
 | 05.05.2026 | 20/20 | 100% | brak | [05.05.2026_results.md](05.05.2026_results.md) |
 | 29.04.2026 | 18/20 | 90% | 15 | [29.04.2026_results.md](29.04.2026_results.md) |
@@ -14,14 +15,14 @@
 
 ## Statystyki
 
-- Najlepszy wynik: 20/20 (100%) — 07.05.2026, 05.05.2026, 24.04.2026, 19.04.2026
+- Najlepszy wynik: 20/20 (100%) — 08.05.2026, 07.05.2026, 05.05.2026, 24.04.2026, 19.04.2026
 - Najgorszy wynik: 17/20 (85%) — 27.04.2026
-- Średnia ze wszystkich prób: 19,00/20 (95,00%)
-- Ostatnie 5 wyników (malejąco po dacie): 07.05.2026 — 20/20 (100%); 05.05.2026 — 20/20 (100%); 29.04.2026 — 18/20 (90%); 27.04.2026 — 17/20 (85%); 25.04.2026 — 19/20 (95%)
+- Średnia ze wszystkich prób: 19,10/20 (95,50%)
+- Ostatnie 5 wyników (malejąco po dacie): 08.05.2026 — 20/20 (100%); 07.05.2026 — 20/20 (100%); 05.05.2026 — 20/20 (100%); 29.04.2026 — 18/20 (90%); 27.04.2026 — 17/20 (85%)
 
 ## Najczęstsze obszary do poprawy
 
-Na podstawie błędów zapisanych we wszystkich plikach `*_results.md` (łącznie **9** pomyłek w dziewięciu quizach; quizy 05.05.2026 i 07.05.2026 nie wnoszą nowych błędów):
+Na podstawie błędów zapisanych we wszystkich plikach `*_results.md` (łącznie **9** pomyłek w dziesięciu quizach; quizy 05.05.2026, 07.05.2026 i 08.05.2026 nie wnoszą nowych błędów):
 
 | Kategoria | Liczba błędów |
 |-----------|----------------|
@@ -46,3 +47,5 @@ Quiz 29.04.2026 (notatki do str. 67): dwa błędy — brak odpowiedzi przy **pas
 Quiz 05.05.2026 (notatki do str. 70): wynik 20/20; przed sprawdzeniem skorygowano pytanie 12 w kluczu (`docs/quiz/answers/05.05.2026_answers.md`) — „rosnące zapotrzebowanie na dane” to kolejność od najmniej do najbardziej kosztownej danymi ścieżki (prompting → dostrajanie → trening od zera), a nie odwrotna.
 
 Quiz 07.05.2026 (notatki do str. 73): wynik 20/20; pełna zgodność odpowiedzi z kluczem i brak nowych kategorii błędów.
+
+Quiz 08.05.2026 (notatki do str. 75): wynik 20/20; pełna zgodność odpowiedzi z kluczem, brak braków w tabeli `my_answers`.
