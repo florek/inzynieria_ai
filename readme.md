@@ -6,4 +6,4 @@ W repozytorium znajduje się materiał do nauki z pozycji *Inżynieria AI. Tworz
 - **Quiz:** `docs/quiz/` — pytania wyłącznie na podstawie notatek w `docs/` (bez katalogu `docs/quiz/` jako źródła treści merytorycznej przy generowaniu pytań).
 - **Kod ćwiczeniowy:** katalog `src/` — zwięzłe przykłady ilustrujące pojęcia z notatek (np. etapy treningu), bez zastępowania pełnej treści książki.
 
-Aktualny zakres notatek obejmuje m.in. **wstęp, rozdział 1 w całości oraz początek rozdziału 2** opracowania do **siedemdziesiątej piątej strony włącznie** w materiale źródłowym (paginacja jak w podglądzie **Strona N** w pliku HTML wygenerowanym z PDF).
+Aktualny zakres notatek obejmuje m.in. **wstęp, rozdział 1 w całości oraz rozszerzony fragment rozdziału 2** opracowania do **siedemdziesiątej dziewiątej strony włącznie** w materiale źródłowym (paginacja jak w podglądzie **Strona N** w pliku HTML wygenerowanym z PDF).

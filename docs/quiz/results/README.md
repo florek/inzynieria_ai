@@ -2,6 +2,7 @@
 
 | Data | Wynik | % | Braki | Link |
 |------|-------|---|-------|------|
+| 09.05.2026 | 17/20 | 85% | 9, 15, 16 | [09.05.2026_results.md](09.05.2026_results.md) |
 | 08.05.2026 | 20/20 | 100% | brak | [08.05.2026_results.md](08.05.2026_results.md) |
 | 07.05.2026 | 20/20 | 100% | brak | [07.05.2026_results.md](07.05.2026_results.md) |
 | 05.05.2026 | 20/20 | 100% | brak | [05.05.2026_results.md](05.05.2026_results.md) |
@@ -16,23 +17,24 @@
 ## Statystyki
 
 - Najlepszy wynik: 20/20 (100%) — 08.05.2026, 07.05.2026, 05.05.2026, 24.04.2026, 19.04.2026
-- Najgorszy wynik: 17/20 (85%) — 27.04.2026
-- Średnia ze wszystkich prób: 19,10/20 (95,50%)
-- Ostatnie 5 wyników (malejąco po dacie): 08.05.2026 — 20/20 (100%); 07.05.2026 — 20/20 (100%); 05.05.2026 — 20/20 (100%); 29.04.2026 — 18/20 (90%); 27.04.2026 — 17/20 (85%)
+- Najgorszy wynik: 17/20 (85%) — 09.05.2026, 27.04.2026
+- Średnia ze wszystkich prób: 18,91/20 (94,55%)
+- Ostatnie 5 wyników (malejąco po dacie): 09.05.2026 — 17/20 (85%); 08.05.2026 — 20/20 (100%); 07.05.2026 — 20/20 (100%); 05.05.2026 — 20/20 (100%); 29.04.2026 — 18/20 (90%)
 
 ## Najczęstsze obszary do poprawy
 
-Na podstawie błędów zapisanych we wszystkich plikach `*_results.md` (łącznie **9** pomyłek w dziesięciu quizach; quizy 05.05.2026, 07.05.2026 i 08.05.2026 nie wnoszą nowych błędów):
+Na podstawie błędów zapisanych we wszystkich plikach `*_results.md` (łącznie **12** pomyłek w jedenastu quizach; quizy 05.05.2026, 07.05.2026 i 08.05.2026 nie wnoszą nowych błędów):
 
 | Kategoria | Liczba błędów |
 |-----------|----------------|
+| [Architektura] | 2 |
 | [Inżynieria AI] | 2 |
 | [Agregacja] | 1 |
 | [Badania] | 1 |
 | [Ewaluacja kodu] | 1 |
 | [Feedback] | 1 |
 
-Pozostałe kategorie z co najmniej jednym błędem w zapisanych wynikach: [Generacja], [Modele podstawowe], [Multimodalność] — po 1.
+Pozostałe kategorie z co najmniej jednym błędem w zapisanych wynikach: [Generacja], [Modele podstawowe], [Multimodalność], [Wnioskowanie] — po 1.
 
 ## Notatki (z wcześniejszej wersji dashboardu)
 
