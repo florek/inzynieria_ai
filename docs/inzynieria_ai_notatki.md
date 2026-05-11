@@ -25,13 +25,23 @@ Wniosek praktyczny: generowanie jest probabilistyczne, więc nawet poprawnie zap
 ## Samonadzorowanie i skala
 Samonadzorowanie umożliwia uczenie bez ręcznego etykietowania każdej próbki, bo etykiety są wyprowadzane z samych danych wejściowych. To kluczowy mechanizm, który pozwolił modelom językowym skalować się do poziomu LLM.
 
-Konsekwencje:
+W modelowaniu języka kolejny token jest etykietą, a wcześniejsze tokeny kontekstem, więc z jednej sekwencji powstaje wiele próbek treningowych. Znaczniki początku i końca sekwencji są potrzebne, by model wiedział, gdzie zacząć i kiedy zakończyć generację w pracy z wieloma sekwencjami.
+
+Samonadzorowanie różni się od uczenia bez nadzoru: w samonadzorowaniu etykiety są wnioskowane z wejścia, w uczeniu bez nadzoru etykiety nie są wymagane w ogóle.
+
+Konsekwencje skali:
 - większe modele wymagają więcej danych i zasobów obliczeniowych,
 - jakość danych bywa ważniejsza niż sama ich ilość,
 - koszt i czas trenowania stają się strategicznym ograniczeniem.
 
+Próg „wielkości” LLM jest umowny i przesuwa się w czasie; rozmiar zwykle wyraża się liczbą parametrów. Większa pojemność uczenia się oznacza zwykle większy apetyt na dane, żeby realnie wykorzystać skalę zamiast marnować moc obliczeniową na przeuczenie małym zbiorem.
+
 ## Od LLM do modeli podstawowych
 Modele podstawowe obejmują zarówno duże modele językowe, jak i multimodalne. Model multimodalny przetwarza i łączy wiele typów danych, np. tekst i obraz.
+
+Duży model multimodalny (LMM) generuje kolejny token warunkowany nie tylko tekstem, lecz także innymi modalnościami obsługiwanymi przez model.
+
+CLIP ilustruje inną klasę modelu: uczenie z parą obraz–tekst bez ręcznego etykietowania każdego obrazu, lecz CLIP jest modelem osadzania wspólnej przestrzeni znaczeń, a nie modelem generatywnym z otwartą odpowiedzią tekstową. Takie osadzanie bywa fundamentem późniejszych systemów generatywnych łączących modalności.
 
 To oznacza przejście od modeli pojedynczego zastosowania do modeli ogólnego przeznaczenia, które adaptuje się przez:
 - inżynierię promptów,
@@ -70,6 +80,8 @@ Sama liczba odpowiedzi modelu nie wystarczy. Trzeba mierzyć jednocześnie:
 - metryki kosztu na zapytanie,
 - metryki biznesowe i satysfakcję użytkowników.
 
+Przykładowe metryki opóźnień w generacji obejmują czas do pierwszego tokena oraz czas na pojedynczy token w trybie autoregresyjnym; akceptowalne wartości zależą od przypadku użycia i punktu odniesienia, np. obsługi ludzkiej.
+
 Kluczowa pułapka: szybki postęp na początku projektu nie skaluje się liniowo do jakości produkcyjnej. Ostatnie procenty jakości zwykle kosztują najwięcej.
 
 ## Utrzymanie i ryzyko długoterminowe
@@ -101,10 +113,19 @@ Techniki adaptacji:
 
 Wiele aplikacji osiąga dobry efekt samą inżynierią promptów, ale wymagania wysokiej jakości, niskiego kosztu i specyficznych zachowań często prowadzą do dostrajania.
 
+Mówienie o „trenowaniu” modelu przez same prompty bywa nieprecyzyjne: jeśli nie zmieniasz wag, technicznie wykonujesz inżynierię promptów, nawet gdy behawioralnie „uczysz” model w potocznym sensie.
+
 ## Trenowanie, dostrajanie i post-trening
 Wstępne trenowanie buduje bazowe kompetencje modelu i jest najbardziej zasobożerne. Dostrajanie kontynuuje uczenie na modelu już wytrenowanym. Post-trening to praktycznie ta sama klasa operacji co dostrajanie, zwykle realizowana przez twórcę modelu przed udostępnieniem.
 
+Po wstępnym treningu model potrafi generować, lecz nie musi być wygodny ani bezpieczny w użyciu; etapy dopasowania do ludzkich preferencji i zachowań użytkowych realizuje się właśnie w obszarze post-treningu lub równoważnym dostrajaniu produkcyjnym.
+
+Nie każda zmiana wag jest „trenowaniem” w sensie produktowym: np. kwantyzacja zmienia reprezentację wag, lecz nie jest tym samym co trening uczenia nadzorowanego w rozumieniu etapów modelu językowego.
+
 Wniosek dla zespołów produktowych: warto precyzyjnie rozróżniać pojęcia, bo od nich zależą oczekiwania dotyczące danych, kosztu i czasu.
+
+## Agenty i automatyzacja
+Agent to system planujący i wywołujący zewnętrzne narzędzia, by wykonać zadanie wykraczające poza samą generację tekstu w jednym kroku, np. wyszukanie numeru, wykonanie akcji w innym systemie, zapis w kalendarzu.
 
 ## Dane treningowe i ich jakość
 Model jest tak dobry, jak dane, na których był uczony. Dane internetowe są skalowalne, ale zawierają szum, dezinformację i treści niskiej jakości. Heurystyki filtracji pomagają, lecz nie rozwiązują problemu całkowicie.
@@ -137,6 +158,37 @@ Wciąż pozostaje ograniczenie autoregresyjnego dekodowania, które jest sekwenc
 Mechanizm uwagi opiera się na wektorach zapytania, klucza i wartości. Model waży, które elementy kontekstu są istotne dla kolejnego tokenu. Wielogłowicowa uwaga pozwala równolegle modelować różne relacje w sekwencji.
 
 Koszt pamięci i obliczeń rośnie wraz z długością kontekstu, ponieważ trzeba utrzymywać stany związane z kluczami i wartościami dla wielu tokenów.
+
+### Seq2seq a transformer
+Klasyczny seq2seq składa się z kodera i dekodera opartych na RNN; dekoder korzystał często tylko z ostatniego stanu ukrytego wejścia, co ograniczało jakość odwołań do pełnego kontekstu, a przetwarzanie było sekwencyjne i kosztowne dla długich wejść.
+
+Transformer eliminuje RNN i pozwala równolegle przetworzyć tokeny wejściowe w fazie wstępnego uzupełniania, a uwaga rozdziela ważność wcześniejszych tokenów przy każdym kroku dekodowania.
+
+### Prefill i dekodowanie
+Wnioskowanie w modelu autoregresyjnym ma dwa szerokie etapy: wstępne uzupełnianie, gdzie wszystkie tokeny wejściowe są przetwarzane równolegle i powstają stany pośrednie z kluczami i wartościami dla kontekstu, oraz dekodowanie, gdzie kolejne tokeny wyjściowe powstają jeden po drugim.
+
+### Blok transformera
+Typowy blok łączy podmoduł uwagi oraz wielowarstwowy perceptron. Moduł uwagi używa zwykle czterech macierzy wag: zapytania, klucza, wartości i rzutu wyjściowego. MLP składa się z warstw liniowych rozdzielonych nieliniowością; pojedyncza warstwa liniowa wewnątrz bloku bywa nazywana warstwą ze sprzężeniem wyprzedzającym.
+
+Typowe nieliniowości w LLM to m.in. ReLU i GELU; prostsze funkcje bywają preferowane, bo wprowadzają nieliniowość przy niskim koszcie obliczeń w porównaniu do bardziej złożonych aktywacji, które nie dają proporcjonalnej korzyści jakościowej.
+
+### Osadzanie wejścia i wyjścia
+Przed blokami transformera działa moduł osadzania tokenów oraz osadzania pozycyjnego; liczba indeksów pozycji wiąże się z maksymalnym kontekstem, choć istnieją metody wydłużania kontekstu bez liniowego zwiększania liczby indeksów pozycji.
+
+Po blokach transformera warstwa wyjściowa mapuje stany ukryte na logity słownika; bywa nazywana warstwą odwrotnego osadzania lub „wierzchołkiem” modelu, bo jest ostatnia przed próbkowaniem.
+
+### Rozmiar modelu a kontekst
+Rozmiar modelu transformer zależy m.in. od wymiaru modelu, liczby bloków, wymiaru warstwy ze sprzężeniem wyprzedzającym i rozmiaru słownika. Wydłużenie okna kontekstu zwiększa zapotrzebowanie na pamięć w fazie wnioskowania, ale nie musi zwiększać całkowitej liczby parametrów w tej samej architekturze wag.
+
+### Alternatywy i konkurencja architektur
+Choć transformer dominuje, pojawiały się wcześniej inne fale architektur, m.in. wokół AlexNet, seq2seq i GAN; transformer jest intensywnie optymalizowany od 2017 roku pod sprzęt masowo równoległy, więc konkurent musi nie tylko być lepszy jakościowo, lecz także sensowny ekonomicznie na realnym sprzęcie.
+
+RWKV łączy motyw RNN z możliwością równoległości treningu; teoretycznie nie wymusza twardego limitu długości kontekstu jak klasyczny obraz transformera, lecz w praktyce bardzo długie sekwencje nadal bywają trudne jakościowo i obliczeniowo.
+
+Modele przestrzeni stanów (SSM) i ich rozwinięcia, np. S4 i H3, celują w wydajniejsze modelowanie długich sekwencji; H3 łączy pamiętanie wcześniejszych tokenów z porównywaniem informacji między sekwencjami w sposób funkcjonalnie zbliżony do idei uwagi, lecz bardziej ekonomicznie w niektórych ustawieniach.
+
+### Ewaluacja a prompty
+Porównywanie modeli wymaga kontroli nad protokołem ewaluacji: ta sama architektura scoringu może dać odwrócony ranking, jeśli modele dostaną inną liczbę przykładów w promptowaniu wielokrokowym albo inną strategię agregacji prób.
 
 ## Dobre praktyki produktowe
 - Startuj od prostszej ścieżki adaptacji i mierz efekt przed eskalacją złożoności.

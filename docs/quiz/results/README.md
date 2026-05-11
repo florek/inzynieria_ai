@@ -2,6 +2,7 @@
 
 | Data | Wynik | % | Braki | Link |
 |------|-------|---|-------|------|
+| 11.05.2026 | 15/20 | 75% | 6, 12, 14, 18 | [11.05.2026_results.md](11.05.2026_results.md) |
 | 09.05.2026 | 17/20 | 85% | 9, 15, 16 | [09.05.2026_results.md](09.05.2026_results.md) |
 | 08.05.2026 | 20/20 | 100% | brak | [08.05.2026_results.md](08.05.2026_results.md) |
 | 07.05.2026 | 20/20 | 100% | brak | [07.05.2026_results.md](07.05.2026_results.md) |
@@ -16,25 +17,24 @@
 
 ## Statystyki
 
-- Najlepszy wynik: 20/20 (100%) — 08.05.2026, 07.05.2026, 05.05.2026, 24.04.2026, 19.04.2026
-- Najgorszy wynik: 17/20 (85%) — 09.05.2026, 27.04.2026
-- Średnia ze wszystkich prób: 18,91/20 (94,55%)
-- Ostatnie 5 wyników (malejąco po dacie): 09.05.2026 — 17/20 (85%); 08.05.2026 — 20/20 (100%); 07.05.2026 — 20/20 (100%); 05.05.2026 — 20/20 (100%); 29.04.2026 — 18/20 (90%)
+- Najlepszy wynik: 20/20 (100%) — 19.04.2026, 24.04.2026, 05.05.2026, 07.05.2026, 08.05.2026
+- Najgorszy wynik: 15/20 (75%) — 11.05.2026
+- Średnia ze wszystkich prób: 18,58/20 (92,92%)
+- Ostatnie 5 wyników (malejąco po dacie): 11.05.2026 — 15/20 (75%); 09.05.2026 — 17/20 (85%); 08.05.2026 — 20/20 (100%); 07.05.2026 — 20/20 (100%); 05.05.2026 — 20/20 (100%)
 
 ## Najczęstsze obszary do poprawy
 
-Na podstawie błędów zapisanych we wszystkich plikach `*_results.md` (łącznie **12** pomyłek w jedenastu quizach; quizy 05.05.2026, 07.05.2026 i 08.05.2026 nie wnoszą nowych błędów):
+Na podstawie sekcji „Szczegóły błędów” we wszystkich plikach `*_results.md` (łącznie **17** zapisanych pomyłek w **dwunastu** quizach):
 
 | Kategoria | Liczba błędów |
 |-----------|----------------|
-| [Architektura] | 2 |
+| [Architektura] | 3 |
 | [Inżynieria AI] | 2 |
+| [Modele podstawowe] | 2 |
 | [Agregacja] | 1 |
 | [Badania] | 1 |
-| [Ewaluacja kodu] | 1 |
-| [Feedback] | 1 |
 
-Pozostałe kategorie z co najmniej jednym błędem w zapisanych wynikach: [Generacja], [Modele podstawowe], [Multimodalność], [Wnioskowanie] — po 1.
+Pozostałe kategorie z dokładnie jednym błędem w zapisanych wynikach: [Aktywacje], [Ewaluacja], [Ewaluacja kodu], [Feedback], [Generacja], [Kwantyzacja], [Multimodalność], [Wnioskowanie].
 
 ## Notatki (z wcześniejszej wersji dashboardu)
 
@@ -51,3 +51,5 @@ Quiz 05.05.2026 (notatki do str. 70): wynik 20/20; przed sprawdzeniem skorygowan
 Quiz 07.05.2026 (notatki do str. 73): wynik 20/20; pełna zgodność odpowiedzi z kluczem i brak nowych kategorii błędów.
 
 Quiz 08.05.2026 (notatki do str. 75): wynik 20/20; pełna zgodność odpowiedzi z kluczem, brak braków w tabeli `my_answers`.
+
+Quiz 11.05.2026: wynik 15/20; cztery braki („X”) oraz jedna pomyłka przy definicji LMM vs model osadzania; warto utrwalić seq2seq/uwagę, prefill/dekodowanie, protokół ewaluacji benchmarków oraz kwantyzację względem treningu.
