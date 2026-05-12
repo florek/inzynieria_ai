@@ -180,6 +180,15 @@ Po blokach transformera warstwa wyjściowa mapuje stany ukryte na logity słowni
 ### Rozmiar modelu a kontekst
 Rozmiar modelu transformer zależy m.in. od wymiaru modelu, liczby bloków, wymiaru warstwy ze sprzężeniem wyprzedzającym i rozmiaru słownika. Wydłużenie okna kontekstu zwiększa zapotrzebowanie na pamięć w fazie wnioskowania, ale nie musi zwiększać całkowitej liczby parametrów w tej samej architekturze wag.
 
+### Liczba parametrów, kolejne generacje i koszt pamięciowy
+W obrębie jednej rodziny modeli większa liczba parametrów zwykle poprawia zdolność uczenia, ale porównania między generacjami pokazują, że nowszy mniejszy model może przewyższyć starszy znacznie większy na tym samym benchmarku, jeśli trening i dane są lepsze.
+
+Do dolnego, orientacyjnego oszacowania pamięci potrzebnej na same wagi przy wnioskowaniu można pomnożyć liczbę parametrów przez liczbę bajtów na wagę; przykładowo rząd 7 miliardów parametrów przy reprezentacji 16-bitowej sugeruje co najmniej około 14 gigabajtów magazynu wag, przy czym w praktyce zużycie pamięci jest wyższe z powodu narzutu środowiska i dodatkowych buforów.
+
+W modelach rzadkich duży ułamej wag o wartości zerowej zmniejsza efektywną liczbę parametrów, które trzeba realnie przechowywać i mnożyć, więc nominalnie większy, lecz mocno rzadki model może być tańszy obliczeniowo niż mniejszy model gęsty.
+
+Architektura MoE dzieli parametry na wielu ekspertów i przy przetwarzaniu pojedynczego tokena aktywuje tylko część ekspertów, co zmienia relację między liczbą wszystkich wag w checkpointcie a kosztem pojedynczego kroku. W opisywanym przykładzie ośmiu ekspertów z rzędu 7 miliardów parametrów każdy daje naiwnie 56 miliardów parametrów przy braku współdzielenia, natomiast przy częściowym współdzieleniu wag łączna liczba parametrów wynosi około 46,7 miliarda w tej samej konfiguracji.
+
 ### Alternatywy i konkurencja architektur
 Choć transformer dominuje, pojawiały się wcześniej inne fale architektur, m.in. wokół AlexNet, seq2seq i GAN; transformer jest intensywnie optymalizowany od 2017 roku pod sprzęt masowo równoległy, więc konkurent musi nie tylko być lepszy jakościowo, lecz także sensowny ekonomicznie na realnym sprzęcie.
 
