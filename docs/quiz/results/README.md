@@ -2,6 +2,7 @@
 
 | Data | Wynik | % | Braki | Link |
 |------|-------|---|-------|------|
+| 13.05.2026 | 9/10 | 90% | 9 | [13.05.2026_results.md](13.05.2026_results.md) |
 | 12.05.2026 | 17/20 | 85% | 10, 13, 17 | [12.05.2026_results.md](12.05.2026_results.md) |
 | 11.05.2026 | 15/20 | 75% | 6, 12, 14, 18 | [11.05.2026_results.md](11.05.2026_results.md) |
 | 09.05.2026 | 17/20 | 85% | 9, 15, 16 | [09.05.2026_results.md](09.05.2026_results.md) |
@@ -20,22 +21,22 @@
 
 - Najlepszy wynik: 20/20 (100%) — 19.04.2026, 24.04.2026, 05.05.2026, 07.05.2026, 08.05.2026
 - Najgorszy wynik: 15/20 (75%) — 11.05.2026
-- Średnia ze wszystkich prób: 17,15/20 (85,77%)
-- Ostatnie 5 wyników (malejąco po dacie): 12.05.2026 — 17/20 (85%); 11.05.2026 — 15/20 (75%); 09.05.2026 — 17/20 (85%); 08.05.2026 — 20/20 (100%); 07.05.2026 — 20/20 (100%)
+- Średnia ze wszystkich prób: 92,14% (średnia procentowa z czternastu quizów; quiz 13.05.2026 ma 10 pytań, pozostałe po 20)
+- Ostatnie 5 wyników (malejąco po dacie): 13.05.2026 — 9/10 (90%); 12.05.2026 — 17/20 (85%); 11.05.2026 — 15/20 (75%); 09.05.2026 — 17/20 (85%); 08.05.2026 — 20/20 (100%)
 
 ## Najczęstsze obszary do poprawy
 
-Na podstawie sekcji „Szczegóły błędów” we wszystkich plikach `*_results.md` (łącznie **20** zapisanych pomyłek w **trzynastu** quizach). **Top 5 kategorii** według liczby błędów:
+Na podstawie sekcji „Szczegóły błędów” we wszystkich plikach `*_results.md` (łącznie **21** zapisanych pomyłek w **czternastu** quizach). **Top 5 kategorii** według liczby błędów:
 
 | Kategoria | Liczba błędów |
 |-----------|----------------|
 | [Architektura] | 3 |
 | [Inżynieria AI] | 2 |
 | [Modele podstawowe] | 2 |
-| [Agregacja] | 1 |
-| [Aktywacje] | 1 |
+| [Rozmiar modelu] | 1 |
+| [Seq2seq] | 1 |
 
-Pozostałe kategorie z dokładnie jednym błędem (remis o miejsca 4–5 w sensie częstości): [Alternatywy architektury], [Badania], [Ewaluacja], [Ewaluacja kodu], [Feedback], [Generacja], [Kwantyzacja], [MoE], [Multimodalność], [Seq2seq], [Wnioskowanie].
+Pozostałe kategorie z dokładnie jednym błędem (remis o miejsca 4–5 w sensie częstości): [Alternatywy architektury], [Agregacja], [Aktywacje], [Badania], [Ewaluacja], [Ewaluacja kodu], [Feedback], [Generacja], [Kwantyzacja], [MoE], [Multimodalność], [Wnioskowanie].
 
 ## Notatki (z wcześniejszej wersji dashboardu)
 
@@ -56,3 +57,5 @@ Quiz 08.05.2026 (notatki do str. 75): wynik 20/20; pełna zgodność odpowiedzi 
 Quiz 11.05.2026: wynik 15/20; cztery braki („X”) oraz jedna pomyłka przy definicji LMM vs model osadzania; warto utrwalić seq2seq/uwagę, prefill/dekodowanie, protokół ewaluacji benchmarków oraz kwantyzację względem treningu.
 
 Quiz 12.05.2026: wynik 17/20; trzy braki („X”) przy pytaniach o **seq2seq**, **RWKV** oraz **liczbę parametrów MoE** — warto domknąć różnicę „jeden stan ukryty vs wielokrotna uwaga”, opis RWKV oraz różnicę między 56 mld a ~46,7 mld przy współdzieleniu wag ekspertów.
+
+Quiz 13.05.2026: wynik 9/10; jeden brak („X”) przy **tokenach treningowych i epokach** — warto utrwalić, że liczba tokenów treningowych to rozmiar korpusu pomnożony przez liczbę epok, a nie sama wielkość zbioru ani liczba parametrów modelu.

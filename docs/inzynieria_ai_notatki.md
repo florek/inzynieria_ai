@@ -130,18 +130,26 @@ Agent to system planujący i wywołujący zewnętrzne narzędzia, by wykonać za
 ## Dane treningowe i ich jakość
 Model jest tak dobry, jak dane, na których był uczony. Dane internetowe są skalowalne, ale zawierają szum, dezinformację i treści niskiej jakości. Heurystyki filtracji pomagają, lecz nie rozwiązują problemu całkowicie.
 
+Popularne repozytoria typu Common Crawl i oczyszczone warianty, np. C4, są szeroko wykorzystywane przy wstępnym treningu wielu modeli podstawowych, mimo że zawierają m.in. clickbait, dezinformację i treści niskiej wiarygodności. Strategia „bierzemy to, co jest dostępne, zamiast tego, czego potrzebujemy” często daje modele silne na wzorcach obecnych w danych treningowych, lecz niekoniecznie na Twoim przypadku użycia.
+
 Najważniejsze obserwacje:
 - nadmiar danych niskiej jakości może przegrywać z mniejszym zbiorem danych wysokiej jakości,
 - rozkład danych determinuje zachowanie modelu,
-- dane domenowe bywają kluczowe dla wysokiej jakości w specjalistycznych zastosowaniach.
+- dane domenowe bywają kluczowe dla wysokiej jakości w specjalistycznych zastosowaniach,
+- większy model trenowany na zbyt małym lub zbyt wąskim zbiorze może działać gorzej niż mniejszy model na bogatszych danych.
 
 ## Wielojęzyczność i niedoreprezentowanie języków
 Dominacja języka angielskiego w danych treningowych przekłada się na przewagę jakościową modeli w tym języku. Języki niedoreprezentowane mają zwykle gorsze wyniki, większy koszt i większe opóźnienia z powodu mniej efektywnej tokenizacji.
 
+W popularnych korpusach internetowych angielski bywa wielokrotnie częstszy niż kolejne języki; dla języków słabo obecnych w danych treningowych relacja udziału w populacji światowej do udziału w korpusie powyżej jeden sygnalizuje niedobór danych. Niedoreprezentowanie nie wyjaśnia jednak wszystkich różnic jakościowych — struktura języka i kontekst kulturowy też wpływają na trudność uczenia.
+
 Tłumaczenie pośrednie do angielskiego nie zawsze rozwiązuje problem, bo może:
 - tracić niuanse semantyczne i kulturowe,
 - utrwalać błędy bezpieczeństwa i jakości,
-- zwiększać koszt całego przepływu.
+- zwiększać koszt całego przepływu,
+- wymagać modelu, który i tak rozumie język źródłowy na tyle, by poprawnie go przetłumaczyć.
+
+Ta sama treść w językach o gorszej efektywności tokenizacji może wymagać znacznie więcej tokenów niż w angielskim, co przy rozliczaniu API podnosi koszt i opóźnienie generacji. Zachowania bezpieczeństwa i jakości mogą różnić się między językami nawet przy tym samym modelu ogólnego przeznaczenia.
 
 ## Modele domenowe
 Modele ogólnego przeznaczenia mają szeroki zakres, ale w zadaniach specjalistycznych często wygrywają modele trenowane lub dostrajane na danych domenowych.
@@ -187,14 +195,17 @@ Do dolnego, orientacyjnego oszacowania pamięci potrzebnej na same wagi przy wni
 
 W modelach rzadkich duży ułamej wag o wartości zerowej zmniejsza efektywną liczbę parametrów, które trzeba realnie przechowywać i mnożyć, więc nominalnie większy, lecz mocno rzadki model może być tańszy obliczeniowo niż mniejszy model gęsty.
 
-Architektura MoE dzieli parametry na wielu ekspertów i przy przetwarzaniu pojedynczego tokena aktywuje tylko część ekspertów, co zmienia relację między liczbą wszystkich wag w checkpointcie a kosztem pojedynczego kroku. W opisywanym przykładzie ośmiu ekspertów z rzędu 7 miliardów parametrów każdy daje naiwnie 56 miliardów parametrów przy braku współdzielenia, natomiast przy częściowym współdzieleniu wag łączna liczba parametrów wynosi około 46,7 miliarda w tej samej konfiguracji.
+Architektura MoE dzieli parametry na wielu ekspertów i przy przetwarzaniu pojedynczego tokena aktywuje tylko część ekspertów, co zmienia relację między liczbą wszystkich wag w checkpointcie a kosztem pojedynczego kroku. W opisywanym przykładzie ośmiu ekspertów z rzędu 7 miliardów parametrów każdy daje naiwnie 56 miliardów parametrów przy braku współdzielenia, natomiast przy częściowym współdzieleniu wag łączna liczba parametrów wynosi około 46,7 miliarda w tej samej konfiguracji. Gdy na każdym kroku aktywni są tylko dwaj eksperci, efektywny koszt i prędkość wnioskowania bywają zbliżone do modelu gęstego o rząd 12,9 miliarda parametrów, mimo znacznie większej liczby wag w całym checkpointcie.
+
+### Skala danych treningowych a epoki
+Rozmiar zbioru danych dla modeli językowych sensowniej mierzyć liczbą tokenów niż liczbą „próbek”, bo jedna próbka może być zdaniem, stroną lub całą książką. Liczba tokenów w zbiorze danych nie jest tym samym co liczba tokenów treningowych: druga mnoży wielkość korpusu przez liczbę epok, czyli pełnych przejść przez dane podczas uczenia. Współczesne LLM bywają trenowane na korpusach liczących biliony tokenów, przy czym kolejne generacje rodzin modeli często korzystają z coraz większych zbiorów, o ile jakość i budżet obliczeniowy na to pozwalają.
 
 ### Alternatywy i konkurencja architektur
 Choć transformer dominuje, pojawiały się wcześniej inne fale architektur, m.in. wokół AlexNet, seq2seq i GAN; transformer jest intensywnie optymalizowany od 2017 roku pod sprzęt masowo równoległy, więc konkurent musi nie tylko być lepszy jakościowo, lecz także sensowny ekonomicznie na realnym sprzęcie.
 
 RWKV łączy motyw RNN z możliwością równoległości treningu; teoretycznie nie wymusza twardego limitu długości kontekstu jak klasyczny obraz transformera, lecz w praktyce bardzo długie sekwencje nadal bywają trudne jakościowo i obliczeniowo.
 
-Modele przestrzeni stanów (SSM) i ich rozwinięcia, np. S4 i H3, celują w wydajniejsze modelowanie długich sekwencji; H3 łączy pamiętanie wcześniejszych tokenów z porównywaniem informacji między sekwencjami w sposób funkcjonalnie zbliżony do idei uwagi, lecz bardziej ekonomicznie w niektórych ustawieniach.
+Modele przestrzeni stanów (SSM) i ich rozwinięcia, np. S4 i H3, celują w wydajniejsze modelowanie długich sekwencji; H3 łączy pamiętanie wcześniejszych tokenów z porównywaniem informacji między sekwencjami w sposób funkcjonalnie zbliżony do idei uwagi, lecz bardziej ekonomicznie w niektórych ustawieniach. Rozwinięcia takie jak Mamba skalują SSM do miliardów parametrów i w części zadań oferują inferencję o koszcie rosnącym liniowo względem długości sekwencji, podczas gdy klasyczna uwaga w transformatorze bywa kwadratowa względem długości kontekstu. Hybrydy łączące warstwy transformera z warstwami SSM, np. Jamba, dążą do większej skali i lepszej pracy z bardzo długim kontekstem przy niższym narzucie pamięciowym niż czysty transformer o porównywalnej jakości.
 
 ### Ewaluacja a prompty
 Porównywanie modeli wymaga kontroli nad protokołem ewaluacji: ta sama architektura scoringu może dać odwrócony ranking, jeśli modele dostaną inną liczbę przykładów w promptowaniu wielokrokowym albo inną strategię agregacji prób.
