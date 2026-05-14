@@ -200,6 +200,20 @@ Architektura MoE dzieli parametry na wielu ekspertów i przy przetwarzaniu pojed
 ### Skala danych treningowych a epoki
 Rozmiar zbioru danych dla modeli językowych sensowniej mierzyć liczbą tokenów niż liczbą „próbek”, bo jedna próbka może być zdaniem, stroną lub całą książką. Liczba tokenów w zbiorze danych nie jest tym samym co liczba tokenów treningowych: druga mnoży wielkość korpusu przez liczbę epok, czyli pełnych przejść przez dane podczas uczenia. Współczesne LLM bywają trenowane na korpusach liczących biliony tokenów, przy czym kolejne generacje rodzin modeli często korzystają z coraz większych zbiorów, o ile jakość i budżet obliczeniowy na to pozwalają.
 
+### FLOP, wykorzystanie sprzętu i trzy liczby skali
+Wymagania obliczeniowe wstępnego treningu opisuje się często liczbą operacji zmiennoprzecinkowych FLOP dla całego zadania, a nie samą liczbą maszyn GPU, CPU czy TPU, bo różne układy mają różną wydajność i koszt. FLOP/s oznacza operacje zmiennoprzecinkowe na sekundę, czyli maksymalną przepustowość sprzętu; angielska liczba mnoga FLOPs bywa mylona z FLOP/s, a niektórzy podają budżet w FLOP/s-day, gdzie jeden dzień to 86 400 sekund pracy przy jednej operacji na sekundę.
+
+Pełne wykorzystanie deklarowanej wydajności przez cały trening jest mało prawdopodobne; wskaźnik wykorzystania mówi, jaka część szczytowej mocy faktycznie pracuje i zależy od modelu, obciążenia i sprzętu. Około połowy deklarowanej wydajności bywa już dobrym wynikiem, a powyżej około siedemdziesięciu procent uznaje się za bardzo dobre, choć nie zwalnia to z dalszej optymalizacji.
+
+Skalę modelu w praktyce opisują trzy liczby: liczba parametrów jako pojemność uczenia, liczba tokenów, na których model był trenowany, jako miara tego, ile wiedzy wyciągnął ze danych, oraz liczba FLOP jako koszt obliczeniowy treningu. Większy model i większy korpus zwykle wymagają większej mocy obliczeniowej, a moc obliczeniowa kosztuje pieniądze, więc planowanie zaczyna się od budżetu, a nie od losowo dużego rozmiaru modelu i dopiero potem od szacunku rachunku.
+
+### Prawo skalowania Chinchilli i skalowanie odwrotne
+Przy ustalonym budżecie FLOP model optymalny obliczeniowo wynika z równoczesnego skalowania rozmiaru modelu i liczby tokenów treningowych; prawo skalowania Chinchilli, wyprowadzone na setkach modeli, sugeruje około dwudziestokrotnie więcej tokenów niż parametrów, więc model rzędu trzech miliardów parametrów potrzebuje rzędu sześćdziesięciu miliardów tokenów treningowych, a podwojenie parametrów powinno iść w parze z podwojeniem tokenów. Reguła zakłada głównie gęste modele trenowane na danych generowanych przez ludzi i niski koszt danych względem obliczeń; dostosowanie do modeli rzadkich, takich jak MoE, oraz do danych syntetycznych jest aktywnym obszarem badań.
+
+Prawo skalowania optymalizuje jakość w ramach budżetu obliczeniowego, lecz w produkcji liczy się też użyteczność: mniejszy model może być tańszy i wygodniejszy w inferencji niż większy, bardziej wydajny na benchmarku, więc twórcy czasem świadomie rezygnują z maksymalnej wydajności obliczeniowej na rzecz adopcji. Koszt osiągnięcia danego poziomu jakości na benchmarkach bywa coraz niższy w czasie, ale podnoszenie jakości z wysokiego poziomu nadal jest drogie, podobnie jak ostatnie procenty jakości w produkcie.
+
+Większy model nie zawsze jest lepszy we wszystkich wymiarach: intensywniejszy trening wyrównania preferencji może paradoksalnie pogorszyć zgodność z oczekiwanymi wartościami, a konkursy typu Inverse Scaling Prize szukały zadań, w których większe LLM radzą sobie gorzej, np. przy zapamiętywaniu lub silnych priorytetach w treści; część zgłoszeń pokazywała regresję na małym zbiorze testowym, ale nie utrzymywała się na danych rzeczywistych w skali wymaganej do najwyższych nagród.
+
 ### Alternatywy i konkurencja architektur
 Choć transformer dominuje, pojawiały się wcześniej inne fale architektur, m.in. wokół AlexNet, seq2seq i GAN; transformer jest intensywnie optymalizowany od 2017 roku pod sprzęt masowo równoległy, więc konkurent musi nie tylko być lepszy jakościowo, lecz także sensowny ekonomicznie na realnym sprzęcie.
 
