@@ -124,6 +124,35 @@ Nie każda zmiana wag jest „trenowaniem” w sensie produktowym: np. kwantyzac
 
 Wniosek dla zespołów produktowych: warto precyzyjnie rozróżniać pojęcia, bo od nich zależą oczekiwania dotyczące danych, kosztu i czasu.
 
+### Post-trening — cele i typowy pipeline
+Post-trening dotyczy modelu już wstępnie wytrenowanego. Samonadzorowane wstępne trenowanie optymalizuje głównie przewidywanie kolejnego tokenu, więc model zachowuje się jak uzupełniacz tekstu, a nie jak rozmówca — na pytanie może kontynuować zdanie pytaniem pomocniczym zamiast udzielić instrukcji. Drugi problem wynika z losowych danych internetowych: model może generować treści obraźliwe, stronnicze lub błędne.
+
+Typowy pipeline produkcyjny obejmuje zwykle dwa etapy:
+- dostrajanie nadzorowane na wysokiej jakości parach instrukcja–odpowiedź, by nauczyć formatu rozmowy i wykonywania zadań,
+- dostrajanie preferencji, by odpowiedzi lepiej odpowiadały ludzkim oczekiwaniom — często przez uczenie przez wzmacnianie, np. RLHF, bezpośrednią optymalizację preferencji lub opinie modelu jako sędziego.
+
+Wstępne trenowanie optymalizuje jakość na poziomie pojedynczego tokenu; użytkownikom zależy na jakości całej odpowiedzi — post-trening przesuwa optymalizację na poziom użytecznej, bezpiecznej odpowiedzi. Można to porównać do zdobywania wiedzy (pre-trening) versus umiejętności jej stosowania (post-trening).
+
+Post-trening zużywa zwykle ułamek mocy obliczeniowej wstępnego treningu — w opisywanym przykładzie InstructGPT około dwa procent obliczeń poszło na post-trening i około dziewięćdziesięciu ośmiu na pre-trening, więc traktuje się go jako odblokowanie kompetencji już obecnych w modelu bazowym, trudnych do wyciągnięcia samymi promptami.
+
+Termin „dostrajanie instrukcji” bywa niejednoznaczny: czasem oznacza wyłącznie SFT, czasem SFT razem z dostrajaniem preferencji — w notatkach rozdzielamy te etapy explicite.
+
+Metafora „Shoggoth z uśmiechniętą maską” oddaje intuicję: surowy model wytrenowany na internecie jest trudny w użyciu, SFT cywilizuje zachowanie na lepszych danych dialogowych, a dostrajanie preferencji nakłada warstwę dopasowaną do użytkownika końcowego. Żaden z kroków nie jest obowiązkowy — każdy można pominąć w zależności od produktu.
+
+### Wąskie gardła skalowania modeli
+Wzrost rozmiaru modeli napędzał postęp, lecz pojawiają się twarde ograniczenia:
+- dane treningowe — tempo wzrostu korpusów przewyższa tempo powstawania nowych danych ludzkich w internecie; treści publikowane online trafiają do przyszłych korpusów jak indeksowanie w wyszukiwarce, co umożliwia celowe zasilanie przyszłych modeli lub ataki przez zatrucie danych. Po wyczerpaniu danych publicznych przewaga przesuwa się na dane zastrzeżone (np. książki, kontrakty, dane medyczne). Restrykcje dostępu do źródeł internetowych mogą unieważniać dużą część popularnych korpusów oczyszczonych.
+- energia — centra danych zużywają rosnący ułamek globalnej energii; bez tańszej produkcji energii skala centrów danych ma górny limit wzrostu, co podnosi koszty i ryzyko niedoborów.
+
+Trenowanie kolejnych modeli na treściach generowanych przez AI komplikuje jakość — modele mogą uczyć się wzorców syntetycznych i stopniowo tracić kontakt z oryginalnym rozkładem danych ludzkich, choć efekt zależy od proporcji i filtrowania.
+
+### Hiperparametry i ekstrapolacja skalowania
+Parametr to wartość uczona w trakcie treningu (wagi). Hiperparametr ustawia człowiek: liczba warstw, wymiar modelu, rozmiar słownika, rozmiar batcha, liczba epok, współczynnik uczenia itd.
+
+Przy wielkich modelach rzadko można wielokrotnie trenować pełną skalę tylko po to, by dobrać hiperparametry — stąd ekstrapolacja skalowania: trenuje się mniejsze warianty, obserwuje wpływ hiperparametrów i przenosi wnioski na docelowy rozmiar. Metoda działa częściowo, lecz jest trudna z powodu liczby hiperparametrów i ich interakcji oraz zdolności emergentnych, które ujawniają się dopiero w dużych modelach i mogą być niewidoczne na małych.
+
+Zdolności emergentne to zachowania pojawiające się dopiero po przekroczeniu skali modelu lub danych, niewidoczne w mniejszych eksperymentach używanych do strojenia hiperparametrów.
+
 ## Agenty i automatyzacja
 Agent to system planujący i wywołujący zewnętrzne narzędzia, by wykonać zadanie wykraczające poza samą generację tekstu w jednym kroku, np. wyszukanie numeru, wykonanie akcji w innym systemie, zapis w kalendarzu.
 

@@ -2,6 +2,7 @@
 
 | Data | Wynik | % | Braki | Link |
 |------|-------|---|-------|------|
+| 15.05.2026 | 7/10 | 70% | 2, 8, 10 | [15.05.2026_results.md](15.05.2026_results.md) |
 | 14.05.2026 | 8/10 | 80% | 8, 10 | [14.05.2026_results.md](14.05.2026_results.md) |
 | 13.05.2026 | 9/10 | 90% | 9 | [13.05.2026_results.md](13.05.2026_results.md) |
 | 12.05.2026 | 17/20 | 85% | 10, 13, 17 | [12.05.2026_results.md](12.05.2026_results.md) |
@@ -21,19 +22,19 @@
 ## Statystyki
 
 - Najlepszy wynik: 20/20 (100%) — 19.04.2026, 24.04.2026, 05.05.2026, 07.05.2026, 08.05.2026
-- Najgorszy wynik: 15/20 (75%) — 11.05.2026
-- Średnia ze wszystkich prób: 91,33% (średnia procentowa z piętnastu quizów; quizy 13.05.2026 i 14.05.2026 mają po 10 pytań, pozostałe po 20)
-- Ostatnie 5 wyników (malejąco po dacie): 14.05.2026 — 8/10 (80%); 13.05.2026 — 9/10 (90%); 12.05.2026 — 17/20 (85%); 11.05.2026 — 15/20 (75%); 09.05.2026 — 17/20 (85%)
+- Najgorszy wynik: 7/10 (70%) — 15.05.2026
+- Średnia ze wszystkich prób: 90,00% (średnia procentowa z szesnastu quizów; quizy 13.05.2026, 14.05.2026 i 15.05.2026 mają po 10 pytań, pozostałe po 20)
+- Ostatnie 5 wyników (malejąco po dacie): 15.05.2026 — 7/10 (70%); 14.05.2026 — 8/10 (80%); 13.05.2026 — 9/10 (90%); 12.05.2026 — 17/20 (85%); 11.05.2026 — 15/20 (75%)
 
 ## Najczęstsze obszary do poprawy
 
-Na podstawie sekcji „Szczegóły błędów” we wszystkich plikach `*_results.md` (łącznie **23** zapisane pomyłki w **piętnastu** quizach). **Top 5 kategorii** według liczby błędów:
+Na podstawie sekcji „Szczegóły błędów” we wszystkich plikach `*_results.md` (łącznie **26** zapisane pomyłki w **szesnastu** quizach). **Top 5 kategorii** według liczby błędów:
 
 | Kategoria | Liczba błędów |
 |-----------|----------------|
+| [ML] | 4 |
 | [Architektura] | 3 |
-| [ML] | 2 |
-| [Inżynieria AI] | 2 |
+| [Inżynieria AI] | 3 |
 | [Modele podstawowe] | 2 |
 | [Rozmiar modelu] | 1 |
 
@@ -62,3 +63,5 @@ Quiz 12.05.2026: wynik 17/20; trzy braki („X”) przy pytaniach o **seq2seq**,
 Quiz 13.05.2026: wynik 9/10; jeden brak („X”) przy **tokenach treningowych i epokach** — warto utrwalić, że liczba tokenów treningowych to rozmiar korpusu pomnożony przez liczbę epok, a nie sama wielkość zbioru ani liczba parametrów modelu.
 
 Quiz 14.05.2026: wynik 8/10; dwa braki („X”) przy **wykorzystaniu sprzętu w szacunku kosztu treningu** oraz **wyborze mniejszego modelu w produkcji** — warto utrwalić rolę współczynnika wykorzystania w formule kosztowej oraz różnicę między optymalnością obliczeniową a kosztem inferencji.
+
+Quiz 15.05.2026: wynik 7/10; braki przy **kolejności etapów post-treningu (SFT → preferencje)** i **zdolnościach emergentnych w ekstrapolacji skalowania**, oraz niepoprawna litera przy analogii pre-trening/post-trening — warto utrwalić pipeline post-treningu, rolę zjawisk emergentnych oraz rozróżnienie wiedzy (tokeny) od umiejętności odpowiedzi (cała odpowiedź).
