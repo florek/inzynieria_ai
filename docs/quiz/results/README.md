@@ -2,6 +2,7 @@
 
 | Data | Wynik | % | Braki | Link |
 |------|-------|---|-------|------|
+| 18.05.2026 | 17/20 | 85% | 15, 19 | [18.05.2026_results.md](18.05.2026_results.md) |
 | 15.05.2026 | 7/10 | 70% | 2, 8, 10 | [15.05.2026_results.md](15.05.2026_results.md) |
 | 14.05.2026 | 8/10 | 80% | 8, 10 | [14.05.2026_results.md](14.05.2026_results.md) |
 | 13.05.2026 | 9/10 | 90% | 9 | [13.05.2026_results.md](13.05.2026_results.md) |
@@ -23,20 +24,20 @@
 
 - Najlepszy wynik: 20/20 (100%) — 19.04.2026, 24.04.2026, 05.05.2026, 07.05.2026, 08.05.2026
 - Najgorszy wynik: 7/10 (70%) — 15.05.2026
-- Średnia ze wszystkich prób: 90,00% (średnia procentowa z szesnastu quizów; quizy 13.05.2026, 14.05.2026 i 15.05.2026 mają po 10 pytań, pozostałe po 20)
-- Ostatnie 5 wyników (malejąco po dacie): 15.05.2026 — 7/10 (70%); 14.05.2026 — 8/10 (80%); 13.05.2026 — 9/10 (90%); 12.05.2026 — 17/20 (85%); 11.05.2026 — 15/20 (75%)
+- Średnia ze wszystkich prób: 89,71% (średnia procentowa z siedemnastu quizów; quizy 13.05.2026, 14.05.2026 i 15.05.2026 mają po 10 pytań, pozostałe po 20)
+- Ostatnie 5 wyników (malejąco po dacie): 18.05.2026 — 17/20 (85%); 15.05.2026 — 7/10 (70%); 14.05.2026 — 8/10 (80%); 13.05.2026 — 9/10 (90%); 12.05.2026 — 17/20 (85%)
 
 ## Najczęstsze obszary do poprawy
 
-Na podstawie sekcji „Szczegóły błędów” we wszystkich plikach `*_results.md` (łącznie **26** zapisane pomyłki w **szesnastu** quizach). **Top 5 kategorii** według liczby błędów:
+Na podstawie sekcji „Szczegóły błędów” we wszystkich plikach `*_results.md` (łącznie **29** zapisane pomyłki w **siedemnastu** quizach). **Top 5 kategorii** według liczby błędów:
 
 | Kategoria | Liczba błędów |
 |-----------|----------------|
 | [ML] | 4 |
 | [Architektura] | 3 |
 | [Inżynieria AI] | 3 |
-| [Modele podstawowe] | 2 |
-| [Rozmiar modelu] | 1 |
+| [MoE] | 2 |
+| [Post-trening] | 2 |
 
 Pozostałe kategorie z dokładnie jednym błędem (remis o miejsca 4–5 w sensie częstości): [Alternatywy architektury], [Agregacja], [Aktywacje], [Badania], [Ewaluacja], [Ewaluacja kodu], [Feedback], [Generacja], [Kwantyzacja], [MoE], [Multimodalność], [Wnioskowanie].
 
@@ -65,3 +66,5 @@ Quiz 13.05.2026: wynik 9/10; jeden brak („X”) przy **tokenach treningowych i
 Quiz 14.05.2026: wynik 8/10; dwa braki („X”) przy **wykorzystaniu sprzętu w szacunku kosztu treningu** oraz **wyborze mniejszego modelu w produkcji** — warto utrwalić rolę współczynnika wykorzystania w formule kosztowej oraz różnicę między optymalnością obliczeniową a kosztem inferencji.
 
 Quiz 15.05.2026: wynik 7/10; braki przy **kolejności etapów post-treningu (SFT → preferencje)** i **zdolnościach emergentnych w ekstrapolacji skalowania**, oraz niepoprawna litera przy analogii pre-trening/post-trening — warto utrwalić pipeline post-treningu, rolę zjawisk emergentnych oraz rozróżnienie wiedzy (tokeny) od umiejętności odpowiedzi (cała odpowiedź).
+
+Quiz 18.05.2026: wynik 17/20; pomyłka przy **Mixtral — 46,7 mld vs 12,9 mld** (checkpoint vs aktywne parametry na krok) oraz braki przy **DPO vs RLHF** i **paradoksie alignmentu** — warto rozdzielać liczbę wag w modelu od kosztu inferencji w MoE oraz utrwalić trade-offy dostrajania preferencji.

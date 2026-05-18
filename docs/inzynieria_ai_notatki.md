@@ -139,6 +139,24 @@ Termin „dostrajanie instrukcji” bywa niejednoznaczny: czasem oznacza wyłąc
 
 Metafora „Shoggoth z uśmiechniętą maską” oddaje intuicję: surowy model wytrenowany na internecie jest trudny w użyciu, SFT cywilizuje zachowanie na lepszych danych dialogowych, a dostrajanie preferencji nakłada warstwę dopasowaną do użytkownika końcowego. Żaden z kroków nie jest obowiązkowy — każdy można pominąć w zależności od produktu.
 
+### Dostrajanie nadzorowane — dane i koszt
+Model po samym wstępnym treningu optymalizuje uzupełnianie tekstu, nie rozmowę: na pytanie może dodać kontekst, zadać pytanie pomocnicze albo — właściwie dla użytkownika — podać instrukcję. SFT pokazuje modelowi pary instrukcja–odpowiedź (dane demonstracyjne); to klonowanie zachowań: model naśladuje jakość i format odpowiedzi z przykładów.
+
+Dane demonstracyjne muszą obejmować różne typy zadań (pytania, streszczenia, tłumaczenia itd.), bo różne prompty wymagają różnych stylów odpowiedzi. Etykietowanie bywa droższe niż proste etykiety obrazów: jedna para może zająć do około trzydziestu minut przy długim kontekście; przy koszcie rzędu dziesięciu dolarów za parę tysiące par to setki tysięcy dolarów samych etykiet, bez projektowania zadań, rekrutacji i kontroli jakości. Wysokiej klasy zespoły etykietujące często mają wykształcenie wyższe.
+
+Źródła danych dialogowych obejmują m.in. wysokiej jakości korpusy Q&A, ręczne adnotacje oraz heurystyki filtrujące rozmowy z internetu (np. wykrywanie wzorca wymiany krótkich akapitów między rolami). Crowdsourcing na dużą skalę obniża koszt, lecz ryzykuje stronniczość: przy masowej mobilizacji wolontariuszy reprezentacja etykietujących może mocno odbiegać od populacji (np. dominacja jednej płci w ankiecie), co przekłada się na preferencje wbudowane w model. Zespoły coraz częściej sięgają po dane syntetyczne generowane przez AI, by ograniczyć zależność od drogich etykiet ludzkich.
+
+Technicznie można trenować model od zera wyłącznie na danych demonstracyjnych i pominąć wstępny krok samonadzorowany, ale ścieżka z pre-treningiem zwykle daje lepsze wyniki przy porównywalnym budżecie.
+
+### Dostrajanie preferencji — RLHF, DPO i model nagradzania
+Dane demonstracyjne uczą formatu rozmowy, ale nie mówią, jakich treści unikać ani jak odpowiadać na kontrowersyjne tematy (aborcja, broń, polityka itd.), gdzie ludzie się nie zgadzają. Zbyt cenzura odstrasza użytkowników; brak guardrailów blokuje wdrożenie u klientów. Celem dostrajania preferencji jest dopasowanie do ludzkich oczekiwań — cel ambitny, bo zakłada możliwość ujednolicenia preferencji w modelu.
+
+Najdłużej stosowany schemat to uczenie przez wzmacnianie z ludzką opinią (RLHF) w dwóch krokach: najpierw trenuje się model nagradzania, który ocenia parę prompt–odpowiedź, potem optymalizuje się model bazowy, by maksymalizować nagrodę. Nowsze metody, np. bezpośrednia optymalizacja preferencji (DPO), upraszczają pipeline — w nowszych wersjach rodzin modeli często rezygnuje się z pełnego RLHF na rzecz DPO ze względu na mniejszą złożoność operacyjną, choć RLHF bywa uznawane za bardziej elastyczne przy trudnych celach preferencji.
+
+Dane do modelu nagradzania są trudne: ocena punktowa (niezależna skala dla każdej odpowiedzi) bywa niespójna między i wewnątrz etykietujących. Łatwiej poprosić o porównanie dwóch odpowiedzi na ten sam prompt i wskazać lepszą — powstają dane porównawcze (prompt, zwycięzca, przegrany). Nawet wtedy zbieżność z subiektywnymi preferencjami bywa niska.
+
+Intensywniejsze treningi „wyrównania” preferencji mogą paradoksalnie pogorszyć zgodność z oczekiwanymi wartościami — większy model nie zawsze jest lepszy we wszystkich wymiarach produktowych.
+
 ### Wąskie gardła skalowania modeli
 Wzrost rozmiaru modeli napędzał postęp, lecz pojawiają się twarde ograniczenia:
 - dane treningowe — tempo wzrostu korpusów przewyższa tempo powstawania nowych danych ludzkich w internecie; treści publikowane online trafiają do przyszłych korpusów jak indeksowanie w wyszukiwarce, co umożliwia celowe zasilanie przyszłych modeli lub ataki przez zatrucie danych. Po wyczerpaniu danych publicznych przewaga przesuwa się na dane zastrzeżone (np. książki, kontrakty, dane medyczne). Restrykcje dostępu do źródeł internetowych mogą unieważniać dużą część popularnych korpusów oczyszczonych.
@@ -248,7 +266,11 @@ Choć transformer dominuje, pojawiały się wcześniej inne fale architektur, m.
 
 RWKV łączy motyw RNN z możliwością równoległości treningu; teoretycznie nie wymusza twardego limitu długości kontekstu jak klasyczny obraz transformera, lecz w praktyce bardzo długie sekwencje nadal bywają trudne jakościowo i obliczeniowo.
 
-Modele przestrzeni stanów (SSM) i ich rozwinięcia, np. S4 i H3, celują w wydajniejsze modelowanie długich sekwencji; H3 łączy pamiętanie wcześniejszych tokenów z porównywaniem informacji między sekwencjami w sposób funkcjonalnie zbliżony do idei uwagi, lecz bardziej ekonomicznie w niektórych ustawieniach. Rozwinięcia takie jak Mamba skalują SSM do miliardów parametrów i w części zadań oferują inferencję o koszcie rosnącym liniowo względem długości sekwencji, podczas gdy klasyczna uwaga w transformatorze bywa kwadratowa względem długości kontekstu. Hybrydy łączące warstwy transformera z warstwami SSM, np. Jamba, dążą do większej skali i lepszej pracy z bardzo długim kontekstem przy niższym narzucie pamięciowym niż czysty transformer o porównywalnej jakości.
+Modele przestrzeni stanów (SSM) i ich rozwinięcia, np. S4 i H3, celują w wydajniejsze modelowanie długich sekwencji; H3 łączy pamiętanie wcześniejszych tokenów z porównywaniem informacji między sekwencjami w sposób funkcjonalnie zbliżony do idei uwagi, lecz bardziej ekonomicznie w niektórych ustawieniach. Rozwinięcia takie jak Mamba skalują SSM do miliardów parametrów i w części zadań oferują inferencję o koszcie rosnącym liniowo względem długości sekwencji, podczas gdy klasyczna uwaga w transformatorze bywa kwadratowa względem długości kontekstu. Hybrydy łączące warstwy transformera z warstwami SSM, np. Jamba, dążą do większej skali i lepszej pracy z bardzo długim kontekstem (np. setki tysięcy tokenów) przy niższym narzucie pamięciowym niż czysty transformer o porównywalnej jakości; warianty MoE w tej rodzinie mogą mieć dziesiątki miliardów parametrów w checkpointcie przy aktywacji tylko części ekspertów na token.
+
+Przy wstępnym treningu liczy się nie tylko liczba tokenów w korpusie, lecz liczba tokenów treningowych (korpus × epoki). Kolejne generacje popularnych rodzin modeli często trenuje się na coraz większych korpusach (np. od około jednego biliona tokenów do kilkunastu bilionów w nowszych wersjach), o ile budżet i jakość danych na to pozwalają. Spadek entropii krzyżowej z około 3,4 do 2,8 natów może wymagać około dziesięciokrotnie więcej danych — drobna zmiana metryki na benchmarku bywa kosztowna w skali treningu.
+
+Ograniczenia dostępu do źródeł internetowych szybko unieważniają część popularnych korpusów oczyszczonych: znaczący odsetek kluczowych źródeł może stać się niedostępny dla kolejnych crawlów, co podnosi wagę umów na dane zastrzeżone i zmiany regulaminów platform.
 
 ### Ewaluacja a prompty
 Porównywanie modeli wymaga kontroli nad protokołem ewaluacji: ta sama architektura scoringu może dać odwrócony ranking, jeśli modele dostaną inną liczbę przykładów w promptowaniu wielokrokowym albo inną strategię agregacji prób.
